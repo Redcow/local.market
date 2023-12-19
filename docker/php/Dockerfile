@@ -1,7 +1,7 @@
 FROM dunglas/frankenphp:alpine
 
 RUN install-php-extensions \
-    pdo_mysql \
+    pdo_pgsql \
     xdebug \
     intl \
     zip \
@@ -12,8 +12,9 @@ RUN install-php-extensions \
 RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
-RUN apk add --no-cache bash
-RUN wget https://get.symfony.com/cli/installer -O - | bash
+RUN apk add --no-cache bash \
+    && curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.alpine.sh' | bash \
+    && apk add symfony-cli
 
 RUN apk add git \
     && git config --global user.email "plet.francois@gmail.com" \

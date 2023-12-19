@@ -19,5 +19,21 @@ services:
       - "6111:443"
     volumes:
       - ./app:/app
+    links:
+      - database
     extra_hosts:
       - host.docker.internal:host-gateway
+
+  database:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_PASSWORD: ChangeMe!
+      POSTGRES_USER: app
+    ports:
+      - "5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
