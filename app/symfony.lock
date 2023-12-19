@@ -42,6 +42,9 @@
             "src/Kernel.php"
         ]
     },
+    "symfony/maker-bundle": {
+        "version": "v1.52.0"
+    },
     "symfony/routing": {
         "version": "7.0",
         "recipe": {
