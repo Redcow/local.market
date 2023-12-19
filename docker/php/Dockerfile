@@ -1,0 +1,24 @@
+FROM dunglas/frankenphp:alpine
+
+RUN install-php-extensions \
+    pdo_mysql \
+    xdebug \
+    intl \
+    zip \
+    opcache \
+    redis \
+    sockets
+
+RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+RUN apk add --no-cache bash
+RUN wget https://get.symfony.com/cli/installer -O - | bash
+
+RUN apk add git \
+    && git config --global user.email "plet.francois@gmail.com" \
+    && git config --global user.name "Francois Plet"
+
+WORKDIR /app
+
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer

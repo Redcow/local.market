@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+
+  php:
+    build: docker/php
+    container_name: foodApi
+    #image: dunglas/frankenphp
+    # uncomment the following line if you want to use a custom Dockerfile
+    #build: .
+    # uncomment the following line if you want to run this in a production environment
+    # restart: always
+    #stdin_open: true
+    #tty: true
+    environment:
+      APP_NAME: FOOD_API
+    ports:
+      - "6110:80"
+      - "6111:443"
+    volumes:
+      - ./app:/app
+    extra_hosts:
+      - host.docker.internal:host-gateway
