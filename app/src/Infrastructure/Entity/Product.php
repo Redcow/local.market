@@ -4,27 +4,27 @@ namespace Fplet\Local\Infrastructure\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Fplet\Local\Infrastructure\Repository\ArticleRepository;
+use Fplet\Local\Infrastructure\Repository\ProductRepository;
 
-#[ORM\Entity(repositoryClass: ArticleRepository::class)]
-class Article
+#[ORM\Entity(repositoryClass: ProductRepository::class)]
+class Product
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 128)]
     private ?string $name = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $description = null;
+
+    #[ORM\Column]
+    private ?int $price = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $quantity = null;
-
-    #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $price = null;
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?product $product = null;
 
     public function getId(): ?int
     {
@@ -43,14 +43,14 @@ class Article
         return $this;
     }
 
-    public function getQuantity(): ?int
+    public function getDescription(): ?string
     {
-        return $this->quantity;
+        return $this->description;
     }
 
-    public function setQuantity(int $quantity): static
+    public function setDescription(string $description): static
     {
-        $this->quantity = $quantity;
+        $this->description = $description;
 
         return $this;
     }
@@ -67,14 +67,14 @@ class Article
         return $this;
     }
 
-    public function getProduct(): ?product
+    public function getQuantity(): ?int
     {
-        return $this->product;
+        return $this->quantity;
     }
 
-    public function setProduct(?product $product): static
+    public function setQuantity(int $quantity): static
     {
-        $this->product = $product;
+        $this->quantity = $quantity;
 
         return $this;
     }
